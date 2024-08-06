@@ -1,0 +1,34 @@
+image:
+  repository: postgres
+  tag: "16"
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 5432
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 4Gi
+
+configMap:
+  initScript1: |
+    CREATE DATABASE products;
+
+  initScript2: |
+    CREATE TABLE IF NOT EXISTS product (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      price NUMERIC(10, 2) NOT NULL
+    );
+
+secret:
+  postgresUser: postgres
+  postgresPassword: forsen123
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: []
